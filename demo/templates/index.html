@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ADAPT IQ – RankerZ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Italiana&family=Galdeano&family=Michroma&family=Lalezar&family=New+Rocker&family=Julius+Sans+One&family=Dongle:wght@300;400;700&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body {
+      background: #0d0d14;
+      color: #e8e8f0;
+      font-family: 'Galdeano', sans-serif;
+      overflow-x: hidden;
+    }
+
+    .page { display: none; }
+    .page.active { display: block; }
+
+    /* ══════════════════════════════════════
+       PAGE 1 — INDEX
+    ══════════════════════════════════════ */
+    #page-index {
+      position: relative;
+      min-height: 1117px;
+      background: #0e0e16;
+      overflow: hidden;
+    }
+
+    /* LOGO */
+    .logo {
+      position: absolute; left: 39px; top: 30px;
+      font-family: 'Lalezar', sans-serif;
+      font-size: 48px; line-height: 1;
+      white-space: nowrap; z-index: 10;
+    }
+    .logo-adapt { color: #fff; }
+    .logo-iq {
+      background: linear-gradient(to bottom, #fff 0%, #059410 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* HEADLINE TAG */
+    .headline-tag {
+      position: absolute; top: 154px; left: 50%;
+      transform: translateX(-50%);
+      display: flex; align-items: center; gap: 14px;
+      z-index: 5; white-space: nowrap;
+    }
+    .htag-line { width: 45px; height: 2px; background: #56c751; opacity: 0.7; }
+    .htag-text {
+      font-size: 15px; letter-spacing: 2.5px;
+      color: #56c751; opacity: 0.7;
+    }
+
+    /* HERO */
+    .hero-heading {
+      position: absolute; top: 211px; left: 50%;
+      transform: translateX(-50%);
+      width: min(1177px, 95vw);
+      font-family: 'Italiana', serif;
+      font-size: clamp(32px, 4vw, 70px);
+      font-weight: 400; line-height: 1.06;
+      color: #fff; text-align: center; z-index: 5;
+    }
+    .hero-grad {
+      background: linear-gradient(to right, #26ec20, #979595);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-sub {
+      position: absolute; top: 300px; left: 50%;
+      transform: translateX(-50%);
+      width: min(541px, 90vw);
+      font-size: 15px; color: rgba(255,255,255,0.33);
+      text-align: center; line-height: 1.65; z-index: 5;
+    }
+
+    /* STEPPER */
+    .stepper {
+      position: absolute; top: 404px; left: 50%;
+      transform: translateX(-50%);
+      display: flex; align-items: flex-start; z-index: 5;
+    }
+    .step-item { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+    .step-circle {
+      width: 60px; height: 60px; border-radius: 50%;
+      border: 2px solid #56c751;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px; color: #fff;
+      background: rgba(86,199,81,0.08);
+    }
+    .step-circle.dim { border-color: rgba(86,199,81,0.35); color: rgba(255,255,255,0.5); background: transparent; }
+    .step-label { font-family: 'Dongle', sans-serif; font-size: 18px; letter-spacing: 2px; color: #fff; }
+    .step-line { width: 189px; height: 2px; margin-top: 29px; background: #56c751; }
+    .step-line.dash {
+      background: repeating-linear-gradient(
+        to right, rgba(86,199,81,0.55) 0, rgba(86,199,81,0.55) 8px,
+        transparent 8px, transparent 16px);
+    }
+
+    /* UPLOAD HEADERS */
+    .upload-header {
+      position: absolute; z-index: 5;
+      display: flex; align-items: center; gap: 14px;
+    }
+    #hdr-cv { top: 617px; left: 203px; }
+    #hdr-jd { top: 612px; left: 1060px; }
+    .icon-box {
+      width: 38px; height: 38px;
+      background: #1e262a; border: 1px solid #2d433b; border-radius: 7px;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .icon-box img { display: block; }
+    .upload-title {
+      font-family: 'Michroma', sans-serif;
+      font-size: 22px; color: #e8e8f0; letter-spacing: 1px; white-space: nowrap;
+    }
+
+    /* UPLOAD SUBTEXTS */
+    .upload-sub { position: absolute; z-index: 5; font-size: 15px; color: rgba(255,255,255,0.33); text-align: center; line-height: 1.5; }
+    #sub-cv { top: 676px; left: 212px; width: 487px; }
+    #sub-jd { top: 676px; left: 1107px; width: 323px; }
+
+    /* DROP ZONES */
+    .drop-zone {
+      position: absolute; z-index: 5;
+      border-radius: 34px; width: 459px; height: 190px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 6px;
+      cursor: pointer;
+      border: 1.5px dashed rgba(86,199,81,0.28);
+      transition: border-color 0.2s, background 0.2s;
+      overflow: hidden;
+    }
+    .drop-zone input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+    #dz-cv {
+      top: 742px; left: 221px;
+      background: linear-gradient(180deg, rgba(22,22,31,0.2) 0%, rgba(64,64,127,0.2) 100%);
+    }
+    #dz-jd {
+      top: 743px; left: 1045px;
+      background: linear-gradient(180deg, rgba(22,22,31,0.2) 0%, rgba(85,85,125,0.2) 100%);
+    }
+    .drop-zone:hover, .drop-zone.over { border-color: #56c751; filter: brightness(1.1); }
+    .drop-main { font-family: 'New Rocker', cursive; font-size: 19px; color: #fff; letter-spacing: 3px; opacity: 0.93; }
+    .drop-sub  { font-family: 'Julius Sans One', sans-serif; font-size: 12px; color: rgba(255,255,255,0.55); letter-spacing: 1.5px; }
+    .drop-fname { font-size: 11px; color: #56c751; }
+
+    /* GENERATE BUTTON */
+    .gen-btn {
+      position: absolute; top: 1013px; left: 638px;
+      width: 420px; height: 62px; z-index: 5;
+      background: linear-gradient(181.4deg, rgba(0,255,20,0.78) 20%, rgba(0,153,12,0.78) 92%);
+      border: none; border-radius: 20px;
+      font-family: 'Galdeano', sans-serif; font-size: 20px; letter-spacing: 1.5px;
+      color: #0f0f1b; cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .gen-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,255,20,0.3); }
+    .gen-btn:active { transform: none; }
+
+    /* PERSPECTIVE GRID */
+    .pgrid {
+      position: absolute; left: -822px; top: calc(70% + 1.75px);
+      width: 3361px; height: 401px;
+      pointer-events: none; z-index: 1;
+    }
+    .pgrid img { width: 100%; height: 100%; display: block; }
+
+
+    /* ══════════════════════════════════════
+       PAGE 2 — SKILLS ANALYSIS
+    ══════════════════════════════════════ */
+    #page-skills {
+      position: relative; min-height: 100vh;
+      background: #0e0e16; overflow: hidden;
+      padding-bottom: 100px;
+    }
+
+    .s-header {
+      display: flex; align-items: center; gap: 18px;
+      padding: 30px 40px 0; position: relative; z-index: 5;
+    }
+    .s-header-title { font-size: 15px; letter-spacing: 3px; color: #56c751; opacity: 0.8; white-space: nowrap; }
+    .s-header-line  { flex: 1; height: 1px; background: rgba(86,199,81,0.3); }
+
+    .s-grid {
+      display: grid;
+      grid-template-columns: 380px 1fr;
+      grid-template-rows: auto auto;
+      gap: 18px;
+      padding: 22px 40px 0;
+      position: relative; z-index: 5;
+    }
+
+    .panel {
+      background: #23232b; border-radius: 17px;
+      padding: 20px 22px;
+      border: 1px solid rgba(255,255,255,0.04);
+    }
+    .ptitle {
+      font-size: 12px; letter-spacing: 2px;
+      color: rgba(255,255,255,0.38);
+      text-transform: uppercase;
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 16px;
+    }
+    .ptitle img { opacity: 0.65; }
+
+    .p-skills  { grid-column: 1; grid-row: 1; min-height: 200px; }
+    .p-gap     { grid-column: 1; grid-row: 2; min-height: 200px; }
+    .p-roadmap { grid-column: 2; grid-row: 1 / 3; min-height: 440px; }
+
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tag {
+      background: rgba(86,199,81,0.09); border: 1px solid rgba(86,199,81,0.28);
+      color: #56c751; border-radius: 20px;
+      padding: 5px 14px; font-size: 12px; letter-spacing: 1px;
+    }
+    .tag.g { background: rgba(255,100,60,0.09); border-color: rgba(255,100,60,0.28); color: #ff9080; }
+
+    .rm-steps { display: flex; flex-direction: column; gap: 16px; }
+    .rm-step  { display: flex; gap: 14px; align-items: flex-start; }
+    .rm-num {
+      width: 26px; height: 26px; flex-shrink: 0;
+      border-radius: 50%; border: 1px solid #56c751;
+      color: #56c751; font-size: 12px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .rm-h { font-size: 12px; letter-spacing: 1.5px; color: #e8e8f0; margin-bottom: 3px; }
+    .rm-d { font-size: 11px; color: rgba(255,255,255,0.38); line-height: 1.5; }
+    .rm-badge {
+      display: inline-block; margin-top: 5px;
+      background: rgba(86,199,81,0.07); border: 1px solid rgba(86,199,81,0.2);
+      border-radius: 4px; padding: 2px 8px;
+      font-size: 9px; letter-spacing: 1px; color: #56c751;
+    }
+
+    /* UP BUTTON */
+    .up-btn {
+      position: fixed; bottom: 34px; right: 38px; z-index: 20;
+      width: 58px; height: 58px; border-radius: 50%;
+      border: none; background: transparent; cursor: pointer; padding: 0;
+    }
+    .up-btn img { width: 100%; height: 100%; border-radius: 50%; display: block; }
+
+    /* FOOTER */
+    .footer {
+      position: relative; z-index: 5;
+      text-align: center; margin-top: 32px;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      font-size: 13px; color: rgba(255,255,255,0.3); letter-spacing: 1px;
+    }
+    .footer img { width: 18px; height: 18px; opacity: 0.4; }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════ PAGE 1 — INDEX ════════════════ -->
+<div id="page-index" class="page active">
+
+  <div class="logo"><span class="logo-adapt">ADAPT </span><span class="logo-iq">IQ</span></div>
+
+  <div class="headline-tag">
+    <div class="htag-line"></div>
+    <span class="htag-text">AI - ADAPTIVE ONBOARDING ENGINE</span>
+    <div class="htag-line"></div>
+  </div>
+
+  <div class="hero-heading">
+    Your <span class="hero-grad">Personalized</span> Learning Path Awaits
+  </div>
+
+  <div class="hero-sub">
+    Upload your resume and job description. Our AI identifies your skill gap and builds a custom training lessons – just for you.
+  </div>
+
+  <div class="stepper">
+    <div class="step-item">
+      <div class="step-circle">1</div>
+      <div class="step-label">UPLOAD</div>
+    </div>
+    <div class="step-line"></div>
+    <div class="step-item">
+      <div class="step-circle">2</div>
+      <div class="step-label">ANALYSE</div>
+    </div>
+    <div class="step-line dash"></div>
+    <div class="step-item">
+      <div class="step-circle dim">3</div>
+      <div class="step-label">ROADMAP</div>
+    </div>
+  </div>
+
+  <!-- CV header -->
+  <div class="upload-header" id="hdr-cv">
+    <div class="icon-box"><img src="https://www.figma.com/api/mcp/asset/8923cf3f-5620-4b5f-b393-6d4ce740fd4d" alt="" width="19" height="19" /></div>
+    <span class="upload-title">UPLOAD YOUR RESUME</span>
+  </div>
+
+  <!-- JD header -->
+  <div class="upload-header" id="hdr-jd">
+    <div class="icon-box"><img src="https://www.figma.com/api/mcp/asset/787afa8d-cc7a-46f2-bb23-cbff3c8b6b03" alt="" width="28" height="28" /></div>
+    <span class="upload-title">JOB DESCRIPTION</span>
+  </div>
+
+  <div class="upload-sub" id="sub-cv">Upload your current resume so we can extract your existing skills.</div>
+  <div class="upload-sub" id="sub-jd">Upload your JD for the role you're onboarding into.</div>
+
+  <!-- Drop CV -->
+  <div class="drop-zone" id="dz-cv"
+       ondragover="dOver(event,this)" ondragleave="dLeave(this)" ondrop="dDrop(event,this,'cv-n')">
+    <input type="file" accept=".pdf,.doc,.docx" onchange="fPick(this,'cv-n')">
+    <span class="drop-main">DRAG &nbsp; AND &nbsp; DROP</span>
+    <span class="drop-sub">PDF, DOCS – MAX 5 MB</span>
+    <span class="drop-fname" id="cv-n"></span>
+  </div>
+
+  <!-- Drop JD -->
+  <div class="drop-zone" id="dz-jd"
+       ondragover="dOver(event,this)" ondragleave="dLeave(this)" ondrop="dDrop(event,this,'jd-n')">
+    <input type="file" accept=".pdf,.doc,.docx" onchange="fPick(this,'jd-n')">
+    <span class="drop-main">DRAG &nbsp; AND &nbsp; DROP</span>
+    <span class="drop-sub">PDF, DOCS – MAX 5 MB</span>
+    <span class="drop-fname" id="jd-n"></span>
+  </div>
+
+  <button class="gen-btn" onclick="go('page-skills')">GENERATE MY LEARNING PATH</button>
+
+  <div class="pgrid"><img src="https://www.figma.com/api/mcp/asset/024beb65-4de0-444f-aae7-09ad571d04c8" alt="" /></div>
+
+</div>
+
+
+<!-- ════════════════ PAGE 2 — SKILLS ANALYSIS ════════════════ -->
+<div id="page-skills" class="page">
+
+  <div class="s-header">
+    <span class="s-header-title">SKILLS ANALYSIS</span>
+    <div class="s-header-line"></div>
+  </div>
+
+  <div class="s-grid">
+
+    <!-- Skills you have -->
+    <div class="panel p-skills">
+      <div class="ptitle">
+        <img src="https://www.figma.com/api/mcp/asset/a5b274bf-c649-483d-adc2-3dd5061080d9" width="16" height="16" alt="" />
+        SKILLS YOU HAVE
+      </div>
+      <div class="tags">
+        <span class="tag">Python</span><span class="tag">SQL</span>
+        <span class="tag">Data Analysis</span><span class="tag">Excel</span>
+        <span class="tag">Communication</span><span class="tag">Git</span>
+        <span class="tag">Problem Solving</span>
+      </div>
+    </div>
+
+    <!-- Skill gap -->
+    <div class="panel p-gap">
+      <div class="ptitle">
+        <img src="https://www.figma.com/api/mcp/asset/d7984e70-d26d-4278-b334-711d6b3d359c" width="22" height="19" alt="" />
+        SKILL GAP FOUND
+      </div>
+      <div class="tags">
+        <span class="tag g">Machine Learning</span><span class="tag g">Cloud (AWS)</span>
+        <span class="tag g">Docker</span><span class="tag g">REST APIs</span>
+        <span class="tag g">Agile / Scrum</span><span class="tag g">Kubernetes</span>
+      </div>
+    </div>
+
+    <!-- Roadmap -->
+    <div class="panel p-roadmap">
+      <div class="ptitle">
+        <img src="https://www.figma.com/api/mcp/asset/30924f2a-1170-47fb-ab10-cb546958e104" width="24" height="20" alt="" />
+        YOUR LEARNING ROADMAP
+      </div>
+      <div class="rm-steps">
+        <div class="rm-step">
+          <div class="rm-num">1</div>
+          <div>
+            <div class="rm-h">MACHINE LEARNING FUNDAMENTALS</div>
+            <div class="rm-d">Supervised & unsupervised learning, model evaluation, scikit-learn basics.</div>
+            <span class="rm-badge">2 WEEKS</span>
+          </div>
+        </div>
+        <div class="rm-step">
+          <div class="rm-num">2</div>
+          <div>
+            <div class="rm-h">CLOUD ESSENTIALS – AWS</div>
+            <div class="rm-d">S3, EC2, Lambda, IAM, and deploying ML models on SageMaker.</div>
+            <span class="rm-badge">2 WEEKS</span>
+          </div>
+        </div>
+        <div class="rm-step">
+          <div class="rm-num">3</div>
+          <div>
+            <div class="rm-h">CONTAINERIZATION WITH DOCKER</div>
+            <div class="rm-d">Images, containers, Dockerfile authoring, docker-compose, CI/CD integration.</div>
+            <span class="rm-badge">1 WEEK</span>
+          </div>
+        </div>
+        <div class="rm-step">
+          <div class="rm-num">4</div>
+          <div>
+            <div class="rm-h">REST API DESIGN</div>
+            <div class="rm-d">HTTP methods, FastAPI / Flask, JWT auth, and API testing with Postman.</div>
+            <span class="rm-badge">1 WEEK</span>
+          </div>
+        </div>
+        <div class="rm-step">
+          <div class="rm-num">5</div>
+          <div>
+            <div class="rm-h">AGILE &amp; SCRUM METHODOLOGY</div>
+            <div class="rm-d">Sprints, standups, backlog grooming, and cross-functional team collaboration.</div>
+            <span class="rm-badge">3 DAYS</span>
+          </div>
+        </div>
+        <div class="rm-step">
+          <div class="rm-num">6</div>
+          <div>
+            <div class="rm-h">KUBERNETES ORCHESTRATION</div>
+            <div class="rm-d">Pods, deployments, services, scaling, and managing containerised workloads in production.</div>
+            <span class="rm-badge">1 WEEK</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <span>All Rights Reserved RankerZ</span>
+    <img src="https://www.figma.com/api/mcp/asset/cb00c645-0490-4e85-9931-27b39585f1e7" alt="©" />
+    <span>2026</span>
+  </div>
+
+  <button class="up-btn" onclick="go('page-index')" title="Back">
+    <img src="https://www.figma.com/api/mcp/asset/7c6efe48-4023-4df2-a057-9ec595898c22" alt="↑" />
+  </button>
+
+  <div class="pgrid" style="top:calc(70% + 1.75px);">
+    <img src="https://www.figma.com/api/mcp/asset/6ab01c15-a384-4d62-8697-d6e0300fba23" alt="" />
+  </div>
+
+</div>
+<script>
+  let selectedFile = null;
+
+  // 1. File Selection Logic
+  function fPick(inp, nid) {
+    if (inp.files[0]) {
+      selectedFile = inp.files[0];
+      document.getElementById(nid).textContent = selectedFile.name;
+    }
+  }
+
+  // 2. The Main Bridge Function
+  async function go(id) {
+    if (id === 'page-skills') {
+      if (!selectedFile) {
+        alert("Upload a resume first, Raj. The AI can't read your mind yet.");
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append('file', selectedFile);
+
+      try {
+        const response = await fetch('/analyze', {
+          method: 'POST',
+          body: formData
+        });
+
+        // If the server dies, this will catch the 500 before it hits the JSON parser
+        if (!response.ok) {
+          const errData = await response.json();
+          throw new Error(errData.error || "Server had a meltdown.");
+        }
+
+        const data = await response.json();
+        
+        // 3. This was the missing function causing the ReferenceError!
+        updateSkillsPage(data);
+        
+      } catch (err) {
+        console.error("Backend is ghosting us:", err);
+        alert("Error: " + err.message);
+        return; // Don't switch pages if it fails
+      }
+    }
+    
+    // Switch Page
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    window.scrollTo(0, 0);
+  }
+
+  // 5. Drag and Drop Helpers
+  function dOver(e, el)  { e.preventDefault(); el.classList.add('over'); }
+  function dLeave(el)    { el.classList.remove('over'); }
+  function dDrop(e, el, nid) {
+    e.preventDefault(); 
+    el.classList.remove('over');
+    const f = e.dataTransfer.files[0];
+    if (f) {
+        selectedFile = f;
+        document.getElementById(nid).textContent = f.name;
+    }
+  }
+  function updateSkillsPage(data) {
+    console.log("Data received by UI:", data); // Check your browser console!
+
+    // Inject "Skills You Have" - check if it's an array first
+    const skillsContainer = document.querySelector('.p-skills .tags');
+    if (skillsContainer) {
+      const skills = Array.isArray(data.candidate_skills) ? data.candidate_skills : [];
+      skillsContainer.innerHTML = skills.length > 0 
+        ? skills.map(s => `<span class="tag">${s}</span>`).join('')
+        : `<span class="tag">Skills detected: ${data.candidate_skills_found || 0}</span>`;
+    }
+
+    // Inject "Skill Gap Found"
+    const gapContainer = document.querySelector('.p-gap .tags');
+    if (gapContainer) {
+      const gaps = Array.isArray(data.gap) ? data.gap : [];
+      gapContainer.innerHTML = gaps.map(s => `<span class="tag g">${s}</span>`).join('');
+    }
+
+    // Inject Dynamic Roadmap
+    const roadmapContainer = document.querySelector('.rm-steps');
+    if (roadmapContainer) {
+      const gaps = Array.isArray(data.gap) ? data.gap : [];
+      roadmapContainer.innerHTML = gaps.map((skill, index) => `
+          <div class="rm-step">
+            <div class="rm-num">${index + 1}</div>
+            <div>
+              <div class="rm-h">${skill.toUpperCase()} MASTERY</div>
+              <div class="rm-d">Training module for ${skill} grounded in O*NET standards.</div>
+              <span class="rm-badge">${index < 3 ? '1 WEEK' : '3 DAYS'}</span>
+            </div>
+          </div>
+      `).join('');
+    }
+    
+    // Update Header
+    const headerTitle = document.querySelector('.s-header-title');
+    if (headerTitle) {
+      headerTitle.textContent = `SKILLS ANALYSIS: ${data.formal_role || 'General Role'}`;
+    }
+  }
+</script>
+</body>
+</html>
