@@ -23,3 +23,12 @@ We opted for a **Hybrid AI + Federal Taxonomy** model. Instead of letting an LLM
 * **Engineering Through Spite**: The current state of the project is a "modular masterpiece" born of necessity. We cached the outputs of the LLM layer to allow the Graph and Taxonomy engines to iterate without waiting for a local GPU to finish its tensor-crunching existential crisis. 
 
 This isn't "fragmented code"; it's **"Asynchronous Resource Optimization"** necessitated by a lack of enterprise-grade compute and a deadline that arrived before we did. It works, it’s logical, and it’s held together by better math than the hardware probably deserves.
+
+
+
+
+# Credits
+**Authors**: Raj, Niranjan. Kaustubh, Rajbir
+**License**: MIT License (See LICENSE file for details)
+**Team**: RaNKeRz
+**Contact**: 7099950967
