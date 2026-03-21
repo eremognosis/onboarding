@@ -1,2 +1,4 @@
 /.venv
 /Data/csvs
+/cleaneddata
+/pq
